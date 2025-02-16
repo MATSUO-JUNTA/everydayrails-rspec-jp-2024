@@ -43,5 +43,12 @@ RSpec.describe User, type: :model do
   # 重複したメールアドレスなら無効な状態であること
   it "is invalid with a duplicate email address"
   # ユーザーのフルネームを文字列として返すこと
-  it "returns a user's full name as a string"
+  it "returns a user's full name as a string" do
+    user = User.new(
+      first_name: "John",
+      last_name: "Doe",
+      email: "johndoe@example.com",
+    )
+    expect(user.name).to eq "John Doe"
+  end
 end
