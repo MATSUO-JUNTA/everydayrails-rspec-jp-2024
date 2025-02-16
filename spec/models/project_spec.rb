@@ -1,6 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
+  # 名があれば有効な状態であること
+  it "is valid with a name" do
+    user = User.create(
+      first_name: "Joe",
+      last_name:  "Tester",
+      email: "joetester@example.com",
+      password:   "dottle-nouveau-pavilion-tights-furze",
+    )
+
+    new_project = user.projects.build(
+      name: "Test Project"
+    )
+
+    expect(new_project).to be_valid
+  end
+
+  # 名がなければ無効な状態であること
+  it "is invalid without a name" do
+    user = User.create(
+      first_name: "Joe",
+      last_name:  "Tester",
+      email: "joetester@example.com",
+      password:   "dottle-nouveau-pavilion-tights-furze",
+    )
+    new_project = user.projects.build(
+      name: nil
+    )
+
+    new_project.valid?
+
+    expect(new_project.errors[:name]).to include("can't be blank")
+  end
+
   # ユーザー単位では重複したプロジェクト名を許可しないこと
   it "does not allow duplicate project names per user" do
     user = User.create(
