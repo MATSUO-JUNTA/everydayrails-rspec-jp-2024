@@ -50,4 +50,11 @@ RSpec.describe "Projects", type: :system do
     # 現在のパスが指定されたパスであることを検証する
     expect(page).to have_current_path "/project/new"
   end
+
+  # ゲストがプロジェクトを追加する
+  scenario "guest adds a project" do
+    visit projects_path
+    save_and_open_page
+    click_link "New Project"
+  end
 end
